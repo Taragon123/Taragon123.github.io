@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/Tensorflow_logo.ico" type="image/x-icon">
+    <title>Teaching generality</title>
+
+    <!-- Import TensorFlow.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
+    <!-- Import tfjs-vis -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis@1.0.2/dist/tfjs-vis.umd.min.js"></script>
+
+    <!-- Import the data file -->
+    <script src="data.js" type="module"></script>
+    
+    <!-- Import the data -->
+    <script src="cifar-100-binary/coarse_label_names.txt"></script>
+    <script src="cifar-100-binary/course_to_fine_mapping.json"></script>
+    <script src="cifar-100-binary/fine_label_names.txt"></script>
+<<<<<<< HEAD
+=======
+    <script src="cifar-100-binary/test.bin"></script>
+    <script src="cifar-100-binary/train.bin"></script>
+>>>>>>> d85c4b5602b38c39c6a8f62c5e99cf933477cb89
+
+    <!-- Import the main script file -->
+    <script src="script.js" type="module"></script>
+
+    <!-- Import druidJS for demension reduction -->
+    <script src="https://unpkg.com/@saehrimnir/druidjs"></script>
+
+    <!-- Import plotly for graphing -->
+    <script src="https://cdn.plot.ly/plotly-2.3.0.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-5 float-left">
+            <div class="row">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="coarse_labels">Catergory:</label>
+                    </div>
+                    <select class="custom-select" id="coarse_labels">
+                    </select>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="element_1">Label 1:</label>
+                    </div>
+                    <select class="custom-select" id="element_1">
+                        <option value="" selected disabled hidden>-select category-</option>
+                    </select>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="element_2">Label 2:</label>
+                    </div>
+                    <select class="custom-select" id="element_2">
+                        <option value="" selected disabled hidden>-select category-</option>
+                    </select>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="epochs_input_label">Num Epochs</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="1" aria-label="Username" aria-describedby="epochs_input_label" id="epochs_input">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="layers_input_label">Num layers</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="1 or 2 thnx" aria-label="Username" aria-describedby="layers_input_label" id="layers_input">
+                </div>
+
+                <!-- Example image preview settings -->
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="wrong_count_label">Num of wrong examples</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="10" aria-label="Username" aria-describedby="wrong_count_label" id="wrong_count_input">
+                </div>
+
+
+                <!-- Layer config settings -->
+                <div>Filter properties</div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="kernel_size_label">Kerneel size</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="5" aria-label="Username" aria-describedby="kernel_size_label" id="kernel_size_input">
+                </div>
+                <div>*Filter fourmual: multiplier * (base ^ layer number)</div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="filter_multiplier_label">Filter numtiplier</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="4" aria-label="Username" aria-describedby="filter_multiplier_label" id="filter_multiplier_input">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="filter_power_label">Filter power base</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="2" aria-label="Username" aria-describedby="filter_power_label" id="filter_power_input">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="filter_strides_label">Filter strides</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="1" aria-label="Username" aria-describedby="filter_strides_label" id="filter_strides_input">
+                </div>
+
+                <div>Pooling layer properties</div>
+                <div>*note: pool settings reflect a square or x size ([x, x] config)</div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="pool_size_label">Pool size</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="2" aria-label="Username" aria-describedby="pool_size_label" id="pool_size_input">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="pool_strides_label">Pool strides</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="2" aria-label="Username" aria-describedby="pool_strides_label" id="pool_strides_input">
+                </div>
+
+    
+            </div>
+
+        </div>
+        <div class="col-sm-2">
+            <div class="row">
+                <button id="start_button" type="button" class="btn btn-danger">Start</button>
+            </div>
+
+            <div class="row">
+                <button id="re_fit_button" type="button" class="btn btn-warning">Re-fit and run</button>
+            </div>
+            <div class="row">
+                <label id="timer_load"></label>
+            </div>
+            <div class="row">
+                <label id="timer_train"></label>
+            </div>
+            <div class="row">
+                <label id="timer_plot"></label>
+            </div>
+        </div>
+        <div class="col-sm" id="empty">
+        </div>
+    </div>
+    <div id="plotlyBox" style="width:600px;height:600px;"></div>
+</div>
+
+
+
+
+</body>
+</html>

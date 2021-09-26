@@ -1,0 +1,14 @@
+<<<<<<< HEAD
+each image has two label bytes (coarse and fine) and 3072 pixel bytes, so the binary files look like this:
+<1 x coarse label><1 x fine label><3072 x pixel>
+
+The 3072 bytes are the values of the pixels of the image. (32x32 colour image)
+The first 1024 bytes are the red channel values, the next 1024 the green, and the final 1024 the blue.
+=======
+each image has two label bytes (coarse and fine) and 3072 pixel bytes, so the binary files look like this:
+<1 x coarse label><1 x fine label><3072 x pixel>
+
+The 3072 bytes are the values of the pixels of the image. (32x32 colour image)
+The first 1024 bytes are the red channel values, the next 1024 the green, and the final 1024 the blue.
+>>>>>>> d85c4b5602b38c39c6a8f62c5e99cf933477cb89
+The values are stored in row-major order, so the first 32 bytes are the red channel values of the first row of the image.
