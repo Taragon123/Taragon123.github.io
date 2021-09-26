@@ -145,7 +145,6 @@ function setOptions(target, items) {
         if (item.length > 0 && item !== null) {
             str += `<option value="${item}">${item.replaceAll("_", " ")}</option>`
         }
-<<<<<<< HEAD
     }
 
     if (target === 'element_1' && document.getElementById(target).value === '') {
@@ -156,18 +155,6 @@ function setOptions(target, items) {
         }
     }
 
-=======
-    }
-
-    if (target === 'element_1' && document.getElementById(target).value === '') {
-        document.getElementById('element_1').onchange = function() {
-            document.getElementById('element_2').disabled = false;
-            let filteredItems = fineLabelOptions.filter(e => {return e !== document.getElementById(target).value})
-            setOptions('element_2', filteredItems)
-        }
-    }
-
->>>>>>> d85c4b5602b38c39c6a8f62c5e99cf933477cb89
     document.getElementById(target).innerHTML = str;
 }
 
