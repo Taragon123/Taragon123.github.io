@@ -72,6 +72,9 @@ async function getTargetData(path, imageCount) {
                     outputViewData.setUint8(count*IMAGE_SIZE+j, inputView.getUint8(i+j));
                 }
                 count++;
+                if (count >= imageCount) {
+                    break;
+                }
             }
             
             let imagesUint8 = new Uint8Array(datasetBytesBuffer);
