@@ -14,16 +14,6 @@
 
     <!-- Import the data file -->
     <script src="data.js" type="module"></script>
-    
-    <!-- Import the data -->
-    <script src="cifar-100-binary/coarse_label_names.txt"></script>
-    <script src="cifar-100-binary/course_to_fine_mapping.json"></script>
-    <script src="cifar-100-binary/fine_label_names.txt"></script>
-<<<<<<< HEAD
-=======
-    <script src="cifar-100-binary/test.bin"></script>
-    <script src="cifar-100-binary/train.bin"></script>
->>>>>>> d85c4b5602b38c39c6a8f62c5e99cf933477cb89
 
     <!-- Import the main script file -->
     <script src="script.js" type="module"></script>
@@ -48,14 +38,14 @@
     <div class="row">
         <div class="col-sm-5 float-left">
             <div class="row">
-                <div class="input-group mb-3">
+                <div class="input-group mb-3" id="catergory_input_set">
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="coarse_labels">Catergory:</label>
                     </div>
                     <select class="custom-select" id="coarse_labels">
                     </select>
                 </div>
-                <div class="input-group mb-3">
+                <div class="input-group mb-3" id="element_1_input_set">
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="element_1">Label 1:</label>
                     </div>
@@ -63,7 +53,7 @@
                         <option value="" selected disabled hidden>-select category-</option>
                     </select>
                 </div>
-                <div class="input-group mb-3">
+                <div class="input-group mb-3" id="element_2_input_set">
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="element_2">Label 2:</label>
                     </div>
@@ -71,69 +61,89 @@
                         <option value="" selected disabled hidden>-select category-</option>
                     </select>
                 </div>
-                <div class="input-group mb-3">
+                <div class="input-group mb-3" id="train_percent_input_set">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="train_scale_input_label">Percentage of training set used:</label>
+                    </div>
+                    <input type="number" class="form-control" placeholder=100 aria-label="Username" aria-describedby="train_scale_input_label" id="train_scale_input">
+                </div>
+                <div class="input-group mb-3" id="preset_input_set">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="preset_select">Network configuration:</label>
+                    </div>
+                    <select class="custom-select" id="preset_select">
+                        <option value="" selected disabled hidden>-select configuration-</option>
+                    </select>
+                </div>
+
+
+
+                
+                <div class="input-group mb-3" id="epochs_input_set">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="epochs_input_label">Num Epochs</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="1" aria-label="Username" aria-describedby="epochs_input_label" id="epochs_input">
+                    <input type="number" class="form-control" placeholder=1 aria-label="Username" aria-describedby="epochs_input_label" id="epochs_input">
                 </div>
-                <div class="input-group mb-3">
+                <div class="input-group mb-3" id="layers_input_set">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="layers_input_label">Num layers</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="1 or 2 thnx" aria-label="Username" aria-describedby="layers_input_label" id="layers_input">
+                    <input type="number" class="form-control" placeholder=2 aria-label="Username" aria-describedby="layers_input_label" id="layers_input">
                 </div>
 
                 <!-- Example image preview settings -->
-                <div class="input-group mb-3">
+                <div class="input-group mb-3" id="wrong_examples_input_set">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="wrong_count_label">Num of wrong examples</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="10" aria-label="Username" aria-describedby="wrong_count_label" id="wrong_count_input">
+                    <input type="number" class="form-control" placeholder=10 aria-label="Username" aria-describedby="wrong_count_label" id="wrong_count_input">
                 </div>
 
 
                 <!-- Layer config settings -->
-                <div>Filter properties</div>
-                <div class="input-group mb-3">
+                <div class="input-group mb-3" id="kernel_input_set">
+                    <div>Filter properties</div>
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="kernel_size_label">Kerneel size</span>
+                        <span class="input-group-text" id="kernel_size_label">Kernel size</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="5" aria-label="Username" aria-describedby="kernel_size_label" id="kernel_size_input">
+                    <input type="number" class="form-control" placeholder=5 aria-label="Username" aria-describedby="kernel_size_label" id="kernel_size_input">
                 </div>
-                <div>*Filter fourmual: multiplier * (base ^ layer number)</div>
-                <div class="input-group mb-3">
+                
+                <div class="input-group mb-3" id="filter_multiplier_input_set">
+                    <div>*Filter fourmual: multiplier * (base ^ layer number)</div>
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="filter_multiplier_label">Filter numtiplier</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="4" aria-label="Username" aria-describedby="filter_multiplier_label" id="filter_multiplier_input">
+                    <input type="number" class="form-control" placeholder=4 aria-label="Username" aria-describedby="filter_multiplier_label" id="filter_multiplier_input">
                 </div>
-                <div class="input-group mb-3">
+                <div class="input-group mb-3" id="filter_power_input_set">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="filter_power_label">Filter power base</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="2" aria-label="Username" aria-describedby="filter_power_label" id="filter_power_input">
+                    <input type="number" class="form-control" placeholder=2 aria-label="Username" aria-describedby="filter_power_label" id="filter_power_input">
                 </div>
-                <div class="input-group mb-3">
+                <div class="input-group mb-3" id="filter_strides_input_set">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="filter_strides_label">Filter strides</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="1" aria-label="Username" aria-describedby="filter_strides_label" id="filter_strides_input">
+                    <input type="number" class="form-control" placeholder=1 aria-label="Username" aria-describedby="filter_strides_label" id="filter_strides_input">
                 </div>
 
-                <div>Pooling layer properties</div>
-                <div>*note: pool settings reflect a square or x size ([x, x] config)</div>
-                <div class="input-group mb-3">
+                
+                <div class="input-group mb-3" id="pool_size_input_set">
+                    <div>Pooling layer properties</div>
+                    <div>*note: pool settings reflect a square or x size ([x, x] config)</div>
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="pool_size_label">Pool size</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="2" aria-label="Username" aria-describedby="pool_size_label" id="pool_size_input">
+                    <input type="number" class="form-control" placeholder=2 aria-label="Username" aria-describedby="pool_size_label" id="pool_size_input">
                 </div>
-                <div class="input-group mb-3">
+                <div class="input-group mb-3" id="pool_strides_input_set">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="pool_strides_label">Pool strides</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="2" aria-label="Username" aria-describedby="pool_strides_label" id="pool_strides_input">
+                    <input type="number" class="form-control" placeholder=2 aria-label="Username" aria-describedby="pool_strides_label" id="pool_strides_input">
                 </div>
 
     
@@ -147,6 +157,9 @@
 
             <div class="row">
                 <button id="re_fit_button" type="button" class="btn btn-warning">Re-fit and run</button>
+            </div>
+            <div class="row">
+                <label id="traingSizeLabel"></label>
             </div>
             <div class="row">
                 <label id="timer_load"></label>

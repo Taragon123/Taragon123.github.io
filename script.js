@@ -1,8 +1,10 @@
 import {MnistData} from './data.js';
 
-const COARSE_FINE_MAP_PATH = "./cifar-100-binary/course_to_fine_mapping.json"
+const COARSE_FINE_MAP_PATH = "./cifar-100-binary/coarse_to_fine_mapping.json"
 const FINE_LABEL_PATH = './cifar-100-binary/fine_label_names.txt';
 const COARSE_LABEL_PATH = './cifar-100-binary/coarse_label_names.txt';
+
+const CONFIG_PATH = './config.json'
 
 const Tags = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -20,6 +22,8 @@ let filterStrides = 1;
 
 let poolSize = 2;
 let poolStride = 2;
+
+let trainScale = 100;
 
 let fineLabels;
 let coarseLabels;
@@ -56,6 +60,21 @@ document.getElementById('re_fit_button').onclick = function() {
     run(targets, true);
 };
 
+document.getElementById('train_scale_input').oninput = function() {
+    if (document.getElementById('train_scale_input').value > 100) {
+        document.getElementById('train_scale_input').value = 100;
+    }
+    if (document.getElementById('train_scale_input').value < 1) {
+        document.getElementById('train_scale_input').value = 1;
+    }
+};
+
+function checkNotDefaultInt(name, currentVal) {
+    const input = parseInt(document.getElementById(name).value);
+    const output = isNaN(input) ? currentVal : input;
+    return output;
+}
+
 function setup() {
     const fineSelection1 = document.getElementById('element_1').value;
     const fineSelection2 = document.getElementById('element_2').value;
@@ -77,12 +96,6 @@ function setup() {
             }
         ]
     };
-
-    const checkNotDefaultInt = function(name, currentVal) {
-        const input = parseInt(document.getElementById(name).value);
-        const output = isNaN(input) ? currentVal : input;
-        return output;
-    }
     
     numEpochs = checkNotDefaultInt('epochs_input', numEpochs);
     layerCount = checkNotDefaultInt('layers_input', layerCount);
@@ -96,10 +109,80 @@ function setup() {
     poolSize = checkNotDefaultInt('pool_size_input', poolSize);
     poolStride = checkNotDefaultInt('pool_strides_input', poolStride);
 
+    trainScale = checkNotDefaultInt('train_scale_input', trainScale);
+
     return targets;
 }
 
 document.addEventListener('DOMContentLoaded', boot);
+
+async function getLocalJson(path) {
+    let output = fetch(path)
+    .then(response => response.json())
+    .then(map => {return map})
+
+    return output;
+}
+
+function loadConfig(masterConfig, config) {
+    if ("hide" in config) {
+        for (let i of config.hide) {
+            for (let x of masterConfig.groupKeys[i]) {
+                document.getElementById(x).style.display = "none";
+            }
+        }
+    }
+
+    if ("config" in config) {
+        for (var key of Object.keys(config.config)) {
+            console.log(key, config.config[key])
+            document.getElementById(key).value = config.config[key]
+        }
+    }
+}
+
+async function checkUrlParams() {
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const params = Object.fromEntries(urlSearchParams.entries());
+
+    const masterConfig = await getLocalJson(CONFIG_PATH);
+
+    function setPresetOptionList() {
+        var str = '<option value="" selected disabled hidden>-select configuration-</option>';
+        for (var key of Object.keys(masterConfig.options.preset)) {
+            str += `<option value="${masterConfig.options.preset[key]}">${masterConfig.options.preset[key].displayName}</option>`
+        }
+    
+        document.getElementById('preset_select').innerHTML = str;
+    }
+    
+    if ("advanced" in params) {
+        let hideList = masterConfig.options.advanced
+        if (params["advanced"] !== "all") {
+            for (let i of params["advanced"].split(',')) {
+                if (i === "presets") {
+                    setPresetOptionList();
+                }
+                
+                let index = hideList.indexOf(i);
+                if (index > -1) {
+                    hideList.splice(index, 1);
+                }
+            }
+        } else {
+            hideList = []
+        }
+        
+        loadConfig(masterConfig, {"hide": hideList});
+    } else if ("preset" in params) {
+        // If preset is 2, use preset 2, otherwise, use preset 1
+        loadConfig(masterConfig, masterConfig.options.preset[params.preset == 2 ? "preset2" : "preset1"])
+    } else {
+        loadConfig(masterConfig, masterConfig.options.default);
+        
+        setPresetOptionList();
+    }
+}
 
 async function getLabelListsFile() {
     
@@ -117,6 +200,8 @@ async function getLabelListsFile() {
 }
 
 async function boot() {
+    await checkUrlParams()
+
     await getLabelListsFile()
 
     setOptions('coarse_labels', coarseLabels);
@@ -145,7 +230,6 @@ function setOptions(target, items) {
         if (item.length > 0 && item !== null) {
             str += `<option value="${item}">${item.replaceAll("_", " ")}</option>`
         }
-<<<<<<< HEAD
     }
 
     if (target === 'element_1' && document.getElementById(target).value === '') {
@@ -156,18 +240,6 @@ function setOptions(target, items) {
         }
     }
 
-=======
-    }
-
-    if (target === 'element_1' && document.getElementById(target).value === '') {
-        document.getElementById('element_1').onchange = function() {
-            document.getElementById('element_2').disabled = false;
-            let filteredItems = fineLabelOptions.filter(e => {return e !== document.getElementById(target).value})
-            setOptions('element_2', filteredItems)
-        }
-    }
-
->>>>>>> d85c4b5602b38c39c6a8f62c5e99cf933477cb89
     document.getElementById(target).innerHTML = str;
 }
 
@@ -200,8 +272,10 @@ async function run(targets, isFit) {
     let loadTimer = startTimer("timer_load")
 
     const data = new MnistData();
-    await data.load(targets);
+    await data.load(targets, trainScale);
     if (clearHistoryOutput) {tfvis.visor().surfaceList.clear();}
+    document.getElementById("traingSizeLabel").innerHTML = `Using ${data.trainingSetSize} items for the training set`
+    
     await showExamples(data);
 
     const model = getModel(data.targets, isFit);

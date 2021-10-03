@@ -1,0 +1,70 @@
+{
+    "html inputs": [
+        "pool_strides_input_set",
+        "pool_size_input_set",
+        "filter_strides_input_set",
+        "filter_power_input_set",
+        "filter_multiplier_input_set",
+        "kernel_input_set",
+        "wrong_examples_input_set",
+        "layers_input_set",
+        "epochs_input_set",
+        "train_percent_input_set",
+        "preset_input_set",
+        "element_2_input_set",
+        "element_1_input_set",
+        "catergory_input_set"
+    ],
+    "groupKeys": {
+        "pool" : [
+            "pool_strides_input_set",
+            "pool_size_input_set"
+        ],
+        "filter": [
+            "filter_strides_input_set",
+            "filter_power_input_set",
+            "filter_multiplier_input_set"
+        ],
+        "kernel": [
+            "kernel_input_set"
+        ],
+        "layers": [
+            "layers_input_set"
+        ],
+        "epochs": [
+            "epochs_input_set"
+        ],
+        "wrongExamples": [
+            "wrong_examples_input_set"
+        ],
+        "trainPercent": [
+            "train_percent_input_set"
+        ],
+        "labels": [
+            "element_2_input_set",
+            "element_1_input_set",
+            "catergory_input_set"
+        ],
+        "presets": [
+            "preset_input_set"
+        ]
+    },
+    "options": {
+        "preset" : {
+            "preset1": {
+                "hide": ["pool", "filter", "kernel", "layers", "epochs", "trainPercent", "presets", "wrongExamples"],
+                "config": {"layers_input": 1},
+                "displayName": "One layer configuration"
+            },
+            "preset2": {
+                "hide": ["pool", "filter", "kernel", "layers", "epochs", "trainPercent", "presets", "wrongExamples"],
+                "config": {"layers_input": 2},
+                "displayName": "Two layer configuration"
+            }
+        },
+        "default": {
+            "hide": ["pool", "filter", "kernel", "layers", "epochs", "trainPercent", "wrongExamples"]
+        },
+        "advanced": ["pool", "filter", "kernel", "layers", "epochs", "trainPercent", "labels", "presets", "wrongExamples"]
+    }
+}

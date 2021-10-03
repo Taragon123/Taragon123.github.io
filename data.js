@@ -91,12 +91,13 @@ function mergeUint8Arrays(arrayA, arrayB) {
 
 // Path is path to dataset
 // isTest is boolean flag for if it is the test dataset, if it is not, it is considered the train set
-async function getLabelsAndData(pathPrefix, targets, isTestSet) {
-    const imageCount = isTestSet ? TEST_SIZE : TRAIN_SIZE;
+async function getLabelsAndData(pathPrefix, targets, isTestSet, trainScale=null) {
+    const imageCount = isTestSet ? TEST_SIZE : TRAIN_SIZE * (trainScale/100);
 
     let dataUint8Array; 
     for (let targetIndex in targets.fine) {
         let path = `${pathPrefix}${targets.fine[targetIndex].rawName}-${targets.fine[targetIndex].index}-${isTestSet ? 'test' : 'train'}.bin`;
+
         let imagesUint8 = await getTargetData(path, imageCount)
 
         if (targetIndex == 0) {
@@ -135,11 +136,12 @@ export class MnistData {
         this.shuffledTestIndex = 0;
     }
 
-    async load(targets) {
+    async load(targets, trainScale) {
         this.targets = targets;
+        this.trainingSetSize = TRAIN_SIZE * (trainScale/100);
 
         [this.testLabels, this.testImages] = await getLabelsAndData(TEST_BIN_PATH_PREFIX, targets, true);
-        [this.trainLabels, this.trainImages] = await getLabelsAndData(TRAIN_BIN_PATH_PREFIX, targets, false);
+        [this.trainLabels, this.trainImages] = await getLabelsAndData(TRAIN_BIN_PATH_PREFIX, targets, false, trainScale);
         
         this.num_train_elements = TRAIN_SIZE * 2;
         this.num_test_elements = TEST_SIZE * 2;
@@ -175,12 +177,6 @@ export class MnistData {
             let idx = index();
 
             let label = data[1].slice(idx * targetCount, idx * targetCount + targetCount);
-            // while (this.targets.every(x => label[x] !== 1)) {
-                // idx++;
-                // label = data[1].slice(idx * NUM_CLASSES, idx * NUM_CLASSES + NUM_CLASSES);
-            // }
-
-            // console.log(label);
             batchLabelsArray.set(label, i * targetCount);
 
             const image = data[0].slice(idx * IMAGE_SIZE, idx * IMAGE_SIZE + IMAGE_SIZE);
