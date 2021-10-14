@@ -120,6 +120,7 @@ async function getTargetData(path, imageCount) {
                 }
 
                 count++;
+                
                 if (count >= imageCount) {  // This is used to limit the training set size
                     break;
                 }
