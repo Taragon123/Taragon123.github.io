@@ -1,0 +1,36 @@
+{
+    "directLabels" : {
+        "tabTitle" : "Teaching generality",
+        "categoryLabel" : "Category",
+        "elementOneLabel" : "Label 1",
+        "elementTwoLabel" : "Label 2",
+        "trainScaleLabel" : "Percentage of training set used:",
+        "networkConfigLabel" : "Network configuration:",
+        "numEpochsLabel" : "Number of Epochs",
+        "layersInputLabel" : "Number of layers",
+        "wrongCountLabel" : "Number of wrong examples",
+        "filterPropertiesHeader" : "Filter properties",
+        "kernelSizeLabel" : "Kernel size",
+        "filterNote" : "Filter fourmual: multiplier * (base ^ layer number)",
+        "filterMultiplierLabel" : "Filter numtiplier",
+        "filterPowerBaseLabel" : "Filter power base",
+        "filterStridesLabel" : "Filter strides",
+        "poolingPropertiesHeader" : "Pooling layer properties",
+        "poolingNote" : "Note: pool settings reflect a square or x size ([x, x] config)",
+        "poolSizeLabel" : "Pool size",
+        "poolStrideNote" : "Due to the limitations of computation, a stride size of 1 will dissable the 2d aproximation of the output",
+        "poolStridesLabel" : "Pool strides",
+        "startButton" : "Start",
+        "reFitButton" : "Re-fit and run"
+    },
+    "htmlEnabledLabels" : {
+        "pageHeader" : "Welcome to this interactable that will help you explore the concept of generality in AI <br> This activity will allow you to train an image recognition IA model and then experiment with how the trained model preforms with inputs outside of the scope it was trained for. <br>To run this interactable, select a catergory then choose two labels for your AI to rain on. <br> Clicking start will start the training process which will take up to a minute or two (<i>This will run significantly slower if harderware acceleration is dissabled for your browser or you run this from a mobile phone</i>). <br>Once your model has finished training and it has shown you the results of the training, you can test how well your AI model generalizes by changing the catergory and labels, then hit re-fit and run. This will take your previously trained AI model and reuse it, only modifying the last output layer. <br>Once you've played with different labels and experimented with how well your model generalizes, you can experiemnt with changing the network configuration. This will change the configutration of the AI model, which can have some big impacts on how well the model preforms and how well it generalizes."
+    },
+    "otherLabels" : {
+        "nullElementSlectionText" : "-select category-",
+        "nullConfigSelectionText" : "-select configuration-",
+        "loadTimerText" : "Time spent loading data: ",
+        "trainTimerText" : "Time spent training the model: ",
+        "plotTimerText" : "Time spent generating the output visualizations: "
+    }
+}

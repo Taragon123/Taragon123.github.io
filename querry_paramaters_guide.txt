@@ -1,0 +1,13 @@
+This file explains how the current querry paramaters work.
+
+the current options are:
+advanced
+preset
+
+preset:
+Preset allows the url to specify one of the given presets. presets must be reeferenced by their number (see info in README about preset configs)
+
+advanced:
+the advanced paramater allows full access to all hidden input fields, but due to the nature of these inputs, the site is VERY likely to crash once the start button is pressed, unless the input are carefully curated by someone knowledgable about convelusional networks and the input paramaters.
+to access all inputs, the value of "all" can be used, otherwise, each input must be manually specified (*NOTE: this includes the label selections)
+the keys for specifying each input can be found in the config.json file, under groupKeys
