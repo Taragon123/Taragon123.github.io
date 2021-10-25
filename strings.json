@@ -31,6 +31,8 @@
         "nullConfigSelectionText" : "-select configuration-",
         "loadTimerText" : "Time spent loading data: ",
         "trainTimerText" : "Time spent training the model: ",
-        "plotTimerText" : "Time spent generating the output visualizations: "
+        "plotTimerText" : "Time spent generating the output visualizations: ",
+        "trainScaleDisplay" : "Using <value> items for the training set",
+        "trainScaleReplaceKey" : "<value>"
     }
 }

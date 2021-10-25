@@ -3,7 +3,7 @@ The code is based off of the google code lab: TensorFlow.js — Handwritten digi
 The finished project is intended to be integrated into the [CS Field Guide](https://www.csfieldguide.org.nz/) to provide pre-tirtiary teachers an additional resource to assit in teaching about AI.
 
 ***Config.json***
-This file contains most of the configuration one might want to change for the application, but any major changes will likely require rework of relevant code
+This file contains most of the configuration one might want to change for the application, but any major changes will likely require rework of relevant code. The relative path of this file must be given at the top of script.js
 
 *groupKeys*:
 Each entry in this represents a toggelable set of inputs for the neural network's parameters. This is in the format of "<gropName> : [<list of html input ids>]"
@@ -39,25 +39,27 @@ fineLabelsPath      :   The relative path to the fine_label_names.txt file from 
 coarseLabelsPath    :   The relative path to the coarse_label_names.txt file from the location of the script 
 
 numEpochs               :   The default number of epochs the training will run
-maxWrong"               :   The default maximum number of examples the system will give of wrong predictions (for each label)
-layerCount"             :   The default number of layers used in the convolutional network
+maxWrong                :   The default maximum number of examples the system will give of wrong predictions (for each label)
+layerCount              :   The default number of layers used in the convolutional network
 
-kernelSize"             :   The default size of the kernel used in the convolutional netowrk
+kernelSize              :   The default size of the kernel used in the convolutional netowrk
 *Note: Filter fourmual  :   multiplier * (base ^ layer number)*
-filtersMultiplier"      :   The default multiplier for the filters in the convolutional netowrk
-filterPowerBase"        :   The default power base for the filters in the convolutional netowrk
-filterStrides"          :   The default strides for filters in the convolutional netowrk
+filtersMultiplier       :   The default multiplier for the filters in the convolutional netowrk
+filterPowerBase         :   The default power base for the filters in the convolutional netowrk
+filterStrides           :   The default strides for filters in the convolutional netowrk
 
 *Note: Pool settings reflect a square or x size ([x, x] config)*
-poolSize"               :   The default size of the pools in the convolutional netowrk
+poolSize                :   The default size of the pools in the convolutional netowrk
 *See section on demsionality reduction below for important note*
-poolStride"             :   The default stride of the pools in the convolutional netowrk
+poolStride              :   The default stride of the pools in the convolutional netowrk
 
-trainScale"             :   The default percentage of the training set that will be used for training the model
+trainScale              :   The default percentage of the training set that will be used for training the model
 
-exampleCount"           :   The default number of examples shown to the user before the training starts
-clearHistoryOutput"     :   A boolean flag indicating if the history of wrong examples should be cleared
-clearHistoryInput"      :    A boolean flag indicating if the history input examples should be cleared
+exampleCount            :   The default number of examples shown to the user before the training starts
+clearHistoryOutput      :   A boolean flag indicating if the history of wrong examples should be cleared
+clearHistoryInput       :   A boolean flag indicating if the history input examples should be cleared
+
+inputToVarMap           :   This is a map of each of the inputs to their respective variable. This is used to set the placeholder values to the defaults as well as being used to check if the input has a non-default value before training
 
 *Note: As a demension reduction technique is used on the output matrix of the predictions flattern layer, when the number of parameters in this grow too large, the demension reduction process will take exponentially longer. This will likely occur if the pool strides is set to 1* 
 demensionReduction:

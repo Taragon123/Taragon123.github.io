@@ -22,7 +22,7 @@
             "wrong_examples_input_set"
         ],
         "trainPercent": [
-            "train_percent_input_set"
+            "train_scale_input_set"
         ],
         "labels": [
             "element_2_input_set",
@@ -44,6 +44,16 @@
                 "hide": ["pool", "filters", "kernel", "layers", "epochs", "trainPercent", "presets", "wrongExamples"],
                 "config": {"layers_input": 2},
                 "displayName": "Two layer configuration"
+            },
+            "preset3": {
+                "hide": ["pool", "filters", "kernel", "layers", "epochs", "trainPercent", "presets", "wrongExamples"],
+                "config": {"layers_input": 1, "train_scale_input": 70},
+                "displayName": "Reduced training one layer"
+            },
+            "preset4": {
+                "hide": ["pool", "filters", "kernel", "layers", "epochs", "trainPercent", "presets", "wrongExamples"],
+                "config": {"layers_input": 2, "train_scale_input": 70},
+                "displayName": "Reduced training two layer"
             }
         },
         "default": {
@@ -77,8 +87,21 @@
             "clearHistoryOutput" : true,
             "clearHistoryInput" : true,
 
+            "inputToVarMap" : {
+                "epochs_input" : "numEpochs",
+                "layers_input" : "layerCount",
+                "wrong_count_input" : "maxWrong",
+                "kernel_size_input" : "kernelSize",
+                "filter_multiplier_input" : "filtersMultiplier",
+                "filter_power_input" : "filterPowerBase",
+                "filter_strides_input" : "filterStrides",
+                "pool_size_input" : "poolSize",
+                "pool_strides_input" : "poolStride",
+                "train_scale_input" : "trainScale"
+            },
+
             "demensionReduction" : {
-                "sizeLimit" : 1000,
+                "sizeLimit" : 1600,
                 "ignoreLimit" : false
             }
             
